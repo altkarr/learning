@@ -9,6 +9,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap" rel="stylesheet" />
 </head>
+<script>
+  function togglePanel(panel) {
+    const isActive = panel.classList.contains('active');
+
+    // Close all panels
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+
+    // Toggle current
+    if (!isActive) {
+      panel.classList.add('active');
+    }
+  }
+</script>
 <body>
   <header>
     <h1>To-Gather</h1>
