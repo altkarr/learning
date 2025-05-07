@@ -37,6 +37,22 @@ header {
   cursor: pointer;
 }
 
+.results-summary {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.results-summary div {
+  background-color: #003f5c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .panel-grid {
   display: flex;
   flex-direction: column;
@@ -56,10 +72,18 @@ header {
   background: #003f5c;
   color: white;
   cursor: default;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel.active .panel-content {
+  display: block;
 }
 
 .panel-content {
   padding: 1rem;
+  display: none;
 }
 
 .sub-panel {
@@ -82,7 +106,7 @@ header {
   display: none;
 }
 
-.sub-panel-content.open {
+.sub-panel-content.active {
   display: block;
 }
 
