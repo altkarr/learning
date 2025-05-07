@@ -31,12 +31,12 @@
   <div class="search-section">
   <input type="text" id="searchInput" placeholder="Search across all categories..." />
   <button onclick="handleSearch()">Search</button>
-  
   <div class="results-summary">
     <div id="socialCount">Social Media: 0</div>
     <div id="newsCount">News Media: 0</div>
     <div id="investingCount">Investing: 0</div>
     <div id="sportsCount">Sports: 0</div>
+    <div id="researchCount">Sports: 0</div>
   </div>
 </div>
   <main class="panel-grid">
@@ -75,6 +75,15 @@
     <p>Live scores, player stats, and schedules will be shown here.</p>
   </div>
 </div>
+
+<div class="panel" onclick="togglePanel(this)">
+  <div class="panel-header">
+    <i class="fa-solid fa-book"></i> Research
+  </div>
+  <div class="panel-content">
+    <p>Research studies, articles and insights will be shown here.</p>
+  </div>
+</div>
   </main>
 
   <script>
@@ -100,6 +109,7 @@ function handleSearch() {
     news: query.includes("cnn") || query.includes("breaking") ? 2 : 0,
     investing: query.includes("stocks") || query.includes("market") ? 4 : 0,
     sports: query.includes("nba") || query.includes("football") ? 1 : 0,
+    research: query.includes("science") || query.includes("researchers") ? 5 : 0,
   };
 
   // Update UI
@@ -107,6 +117,7 @@ function handleSearch() {
   document.getElementById("newsCount").textContent = `News Media: ${results.news}`;
   document.getElementById("investingCount").textContent = `Investing: ${results.investing}`;
   document.getElementById("sportsCount").textContent = `Sports: ${results.sports}`;
+  document.getElementById("researchCount").textContent = `Research: ${results.research}`;
 }
 </script>
 </body>
