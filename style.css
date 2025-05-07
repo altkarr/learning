@@ -45,7 +45,7 @@ body {
   padding: 0 20px;
   background-color: #fafafa;
   transition: max-height 0.4s ease, padding 0.3s ease;
-  font-family: Arial, sans-serif; /* Override to clean font for inner text */
+  font-family: "Hanalei Fill", system-ui; /* Override to clean font for inner text */
   color: #333;
 }
 
@@ -84,7 +84,7 @@ body {
   justify-content: center;
   gap: 15px;
   margin-top: 10px;
-  font-family: Arial, sans-serif;
+  font-family: "Hanalei Fill", system-ui;
 }
 
 .results-summary div {
