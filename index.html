@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -28,47 +28,24 @@
     </div>
   </div>
 
-  <div class="ticker-container">
-    <div class="ticker" id="sportsTicker">Loading sports scores...</div>
-    <div class="ticker" id="investingTicker">Loading financial updates...</div>
-  </div>
-
   <main class="panel-grid">
     <!-- Social Media Panel -->
     <div class="panel" id="socialMediaPanel">
-      <div class="panel-header" onclick="togglePanel('socialMediaPanel')">
+      <div class="panel-header">
         <i class="fab fa-hashtag"></i> Social Media
       </div>
       <div class="panel-content">
-        <div class="refine-options">
-          <label>Time Range:</label>
-          <select>
-            <option>Past Week</option>
-            <option>Past Month</option>
-            <option>3 Months</option>
-            <option>6 Months</option>
-            <option>Past Year</option>
-          </select>
+        <div class="sub-panel">
+          <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
+          <div class="sub-panel-content" id="twitterPanel"></div>
+        </div>
+        <div class="sub-panel">
+          <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
+          <div class="sub-panel-content" id="instagramPanel"></div>
         </div>
         <div class="sub-panel">
           <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit</div>
-          <div class="sub-panel-content" id="redditPanel">
-            <!-- Reddit posts will go here -->
-            <div class="result-item">
-              <img src="https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-180x180.png" alt="Reddit">
-              <a href="#">Sample Reddit post on AI</a>
-              <span class="meta">2.1k upvotes · 320 comments · Apr 30, 2025</span>
-            </div>
-          </div>
-        </div>
-        <!-- Twitter and Instagram stubs -->
-        <div class="sub-panel">
-          <div class="sub-panel-header">Twitter/X</div>
-          <div class="sub-panel-content">Results will appear here.</div>
-        </div>
-        <div class="sub-panel">
-          <div class="sub-panel-header">Instagram</div>
-          <div class="sub-panel-content">Results will appear here.</div>
+          <div class="sub-panel-content" id="redditPanel"></div>
         </div>
       </div>
     </div>
@@ -79,18 +56,12 @@
         <i class="fas fa-newspaper"></i> News Media
       </div>
       <div class="panel-content">
-        <div class="refine-options">
-          <label>Time Range:</label>
-          <select>
-            <option>Today</option>
-            <option>This Week</option>
-            <option>This Month</option>
-          </select>
+        <div class="bias-meter-legend">
+          <span>Left</span>
+          <div class="bias-bar"><span class="bias-indicator" style="left: 40%"></span></div>
+          <span>Right</span>
         </div>
-        <div class="result-item">
-          <a href="#">Example headline on economy</a>
-          <span class="meta">Source: CNN · Center-left · May 6, 2025</span>
-        </div>
+        <div id="newsResults"></div>
       </div>
     </div>
 
@@ -98,23 +69,18 @@
     <div class="panel" id="investingPanel">
       <div class="panel-header">
         <i class="fas fa-chart-line"></i> Investing
+        <marquee class="ticker" behavior="scroll" direction="left">Loading live market data...</marquee>
       </div>
-      <div class="panel-content">
-        <div class="result-item">
-          <a href="#">Stock market reacts to Fed decision</a>
-          <span class="meta">Yahoo Finance · May 6, 2025</span>
-        </div>
-      </div>
+      <div class="panel-content" id="investingResults"></div>
     </div>
 
     <!-- Sports Panel -->
     <div class="panel" id="sportsPanel">
       <div class="panel-header">
         <i class="fas fa-football-ball"></i> Sports
+        <marquee class="ticker" behavior="scroll" direction="left">Live scores updating...</marquee>
       </div>
-      <div class="panel-content">
-        <p>Live scores from NBA, NHL, MLB, UFC, Golf, Soccer, etc. will be shown here.</p>
-      </div>
+      <div class="panel-content" id="sportsResults"></div>
     </div>
 
     <!-- Research Panel -->
@@ -122,10 +88,7 @@
       <div class="panel-header">
         <i class="fas fa-book"></i> Research
       </div>
-      <div class="panel-content">
-        <a href="#">Google Scholar result on Quantum Computing</a>
-        <span class="meta">Nature Journal · Apr 25, 2025</span>
-      </div>
+      <div class="panel-content" id="researchResults"></div>
     </div>
   </main>
 
@@ -144,16 +107,20 @@
 
     function handleSearch() {
       const query = document.getElementById("searchInput").value.toLowerCase();
-      document.getElementById("socialCount").textContent = `Social Media: ${Math.floor(Math.random() * 10)}`;
-      document.getElementById("newsCount").textContent = `News Media: ${Math.floor(Math.random() * 10)}`;
-      document.getElementById("investingCount").textContent = `Investing: ${Math.floor(Math.random() * 10)}`;
-      document.getElementById("sportsCount").textContent = `Sports: ${Math.floor(Math.random() * 10)}`;
-      document.getElementById("researchCount").textContent = `Research: ${Math.floor(Math.random() * 10)}`;
-    }
+      const results = {
+        social: query.includes("twitter") || query.includes("reddit") ? 3 : 0,
+        news: query.includes("cnn") || query.includes("breaking") ? 2 : 0,
+        investing: query.includes("stocks") || query.includes("market") ? 4 : 0,
+        sports: query.includes("nba") || query.includes("football") ? 1 : 0,
+        research: query.includes("science") || query.includes("researchers") ? 5 : 0,
+      };
 
-    // Placeholder ticker data
-    document.getElementById("sportsTicker").textContent = "NBA: Lakers 102 - Warriors 98 | NHL: Bruins 3 - Leafs 2 | UFC: Oliveira def. Dariush (Rd 2) | Golf: Scheffler leads by 2";
-    document.getElementById("investingTicker").textContent = "DOW +150 | NASDAQ -45 | S&P 500 +22 | Bitcoin $65,000 | Ethereum $3,200";
+      document.getElementById("socialCount").textContent = `Social Media: ${results.social}`;
+      document.getElementById("newsCount").textContent = `News Media: ${results.news}`;
+      document.getElementById("investingCount").textContent = `Investing: ${results.investing}`;
+      document.getElementById("sportsCount").textContent = `Sports: ${results.sports}`;
+      document.getElementById("researchCount").textContent = `Research: ${results.research}`;
+    }
   </script>
 </body>
 </html>
