@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <script>
   function togglePanel(panel) {
@@ -30,32 +31,40 @@
 
   <main class="panel-grid">
     <div class="panel" onclick="togglePanel(this)">
-      <div class="panel-header">Social Media</div>
-      <div class="panel-content">
-        <p>Live social media feeds will go here.</p>
-      </div>
-    </div>
+  <div class="panel-header">
+    <i class="fas fa-hashtag"></i> Social Media
+  </div>
+  <div class="panel-content">
+    <p>Real-time tweets, Reddit threads, and trends will go here.</p>
+  </div>
+</div>
 
-    <div class="panel" onclick="togglePanel(this)">
-      <div class="panel-header">News Media</div>
-      <div class="panel-content">
-        <p>Latest news from public sources will display here.</p>
-      </div>
-    </div>
+<div class="panel" onclick="togglePanel(this)">
+  <div class="panel-header">
+    <i class="fas fa-newspaper"></i> News Media
+  </div>
+  <div class="panel-content">
+    <p>Top headlines, RSS feeds, and articles will populate here.</p>
+  </div>
+</div>
 
-    <div class="panel" onclick="togglePanel(this)">
-      <div class="panel-header">Investing</div>
-      <div class="panel-content">
-        <p>Market data and financial updates will be shown here.</p>
-      </div>
-    </div>
+<div class="panel" onclick="togglePanel(this)">
+  <div class="panel-header">
+    <i class="fas fa-chart-line"></i> Investing
+  </div>
+  <div class="panel-content">
+    <p>Stock tickers, charts, and financial data will show here.</p>
+  </div>
+</div>
 
-    <div class="panel" onclick="togglePanel(this)">
-      <div class="panel-header">Sports</div>
-      <div class="panel-content">
-        <p>Sports scores, updates, and headlines will load here.</p>
-      </div>
-    </div>
+<div class="panel" onclick="togglePanel(this)">
+  <div class="panel-header">
+    <i class="fas fa-basketball-ball"></i> Sports
+  </div>
+  <div class="panel-content">
+    <p>Live scores, player stats, and schedules will be shown here.</p>
+  </div>
+</div>
   </main>
 
   <script>
