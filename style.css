@@ -1,23 +1,27 @@
 body {
   background-color: #f0f4f8;
-  font-family: "Mrs Sheppards"; /* 'cursive' fallback should remain here just in case */
+  font-family: "Mrs Sheppards", sans-serif; /* Added sans-serif fallback */
 }
 
 .mrs-sheppards-regular {
-  font-family: "Mrs Sheppards"; /* Same here: remove 'cursive' if not needed */
-  font-weight: 400;
-  font-style: normal;
+  font-family: "Mrs Sheppards", sans-serif;
+  font-weight: 400; /* Ensure the correct weight is applied */
+  font-style: normal; /* Ensure the font is not italicized */
   text-align: center;
   padding: 50px;
 }
 
 h1 {
   color: #2c3e50;
-  font-family: "Mrs Sheppards"; /* Same fix for h1 */
+  font-family: "Mrs Sheppards", sans-serif; /* Apply font to h1 */
+  font-weight: 400; /* Ensure it is the regular weight */
+  font-style: normal; /* Ensure it is not italicized */
 }
 
 p {
   color: #555;
-  font-family: "Mrs Sheppards"; /* Removed cursive to use non-cursive style */
+  font-family: "Mrs Sheppards", sans-serif; /* Apply font to p */
   font-size: 24px;
+  font-weight: 400; /* Ensure it is the regular weight */
+  font-style: normal; /* Ensure it is not italicized */
 }
