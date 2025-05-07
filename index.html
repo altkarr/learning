@@ -1,192 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>To-Gather</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Gather - Aggregated Media</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <header>
-    <h1>To-Gather</h1>
-    <p>Select a category to explore aggregated content.</p>
+    <h1>To Gather</h1>
+    <div class="category-tickers">
+      <div id="sports-ticker" class="ticker"></div>
+      <div id="stock-ticker" class="ticker"></div>
+    </div>
   </header>
 
   <div class="search-section">
-    <input type="text" id="searchInput" placeholder="Search across all categories..." oninput="handleSearch()" />
-    <button onclick="handleSearch()">Search</button>
-    <div class="results-summary">
-      <div id="socialCount" onclick="togglePanel('socialMediaPanel')">Social Media: 0</div>
-      <div id="newsCount" onclick="togglePanel('newsPanel')">News Media: 0</div>
-      <div id="investingCount" onclick="togglePanel('investingPanel')">Investing: 0</div>
-      <div id="sportsCount" onclick="togglePanel('sportsPanel')">Sports: 0</div>
-      <div id="researchCount" onclick="togglePanel('researchPanel')">Research: 0</div>
-    </div>
+    <input type="text" id="searchQuery" placeholder="Search..." />
+    <button onclick="search()">Search</button>
   </div>
 
-  <main class="panel-grid">
+  <div class="panel-grid">
     <!-- Social Media Panel -->
-    <div class="panel" id="socialMediaPanel">
-      <div class="panel-header" onclick="togglePanel('socialMediaPanel')">
-        <i class="fab fa-hashtag"></i>
-        <span>Social Media</span>
-        <span class="arrow">▼</span>
-      </div>
-      <div class="panel-content">
-        <!-- Twitter -->
-        <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
-          <div class="sub-panel-content" id="twitterPanel">
-            <!-- Results will populate here dynamically -->
-          </div>
-        </div>
-
-        <!-- Instagram -->
-        <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
-          <div class="sub-panel-content" id="instagramPanel">
-            <!-- Results will populate here dynamically -->
-          </div>
-        </div>
-
-        <!-- Reddit -->
-        <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit</div>
-          <div class="sub-panel-content" id="redditPanel">
-            <!-- Results will populate here dynamically -->
-          </div>
-        </div>
-      </div>
+    <div id="socialMediaPanel" class="panel">
+      <div class="panel-header">Social Media</div>
+      <div class="panel-content"></div>
     </div>
 
     <!-- News Media Panel -->
-    <div class="panel" id="newsPanel">
-      <div class="panel-header" onclick="togglePanel('newsPanel')">
-        <i class="fas fa-newspaper"></i> News Media
-      </div>
-      <div class="panel-content">
-        <!-- News articles will populate here dynamically -->
-      </div>
-    </div>
-
-    <!-- Investing Panel -->
-    <div class="panel" id="investingPanel">
-      <div class="panel-header" onclick="togglePanel('investingPanel')">
-        <i class="fas fa-chart-line"></i> Investing
-      </div>
-      <div class="panel-content">
-        <!-- Stock related articles and tickers -->
-        <div class="investing-ticker" id="investingTicker">
-          <div class="ticker">
-            <div class="ticker-item">Stock: Tesla - $800 +2%</div>
-            <div class="ticker-item">Stock: Apple - $150 +1.5%</div>
-            <div class="ticker-item">Stock: Amazon - $3500 +3%</div>
-          </div>
-        </div>
-        <!-- Articles related to investing will appear here -->
-      </div>
+    <div id="newsPanel" class="panel">
+      <div class="panel-header">News</div>
+      <div class="panel-content"></div>
     </div>
 
     <!-- Sports Panel -->
-    <div class="panel" id="sportsPanel">
-      <div class="panel-header" onclick="togglePanel('sportsPanel')">
-        <i class="fas fa-football-ball"></i> Sports
-      </div>
-      <div class="panel-content">
-        <!-- Sports scores ticker -->
-        <div class="sports-ticker" id="sportsTicker">
-          <div class="ticker">
-            <div class="ticker-item">NBA: Lakers 110 - 100 Celtics</div>
-            <div class="ticker-item">NHL: Leafs 2 - 1 Bruins</div>
-            <div class="ticker-item">MLB: Yankees 5 - 3 Red Sox</div>
-          </div>
-        </div>
-        <!-- Sports articles will appear here -->
-      </div>
+    <div id="sportsPanel" class="panel">
+      <div class="panel-header">Sports</div>
+      <div class="panel-content"></div>
+    </div>
+
+    <!-- Investing Panel -->
+    <div id="investingPanel" class="panel">
+      <div class="panel-header">Investing</div>
+      <div class="panel-content"></div>
     </div>
 
     <!-- Research Panel -->
-    <div class="panel" id="researchPanel">
-      <div class="panel-header" onclick="togglePanel('researchPanel')">
-        <i class="fas fa-book"></i> Research
-      </div>
-      <div class="panel-content">
-        <!-- Google Scholar search or Research Articles will be linked here -->
-      </div>
+    <div id="researchPanel" class="panel">
+      <div class="panel-header">Research</div>
+      <div class="panel-content"></div>
     </div>
-  </main>
+  </div>
 
   <script>
-    // Function to toggle panels
-    function togglePanel(id) {
-      const panel = document.getElementById(id);
-      const isOpen = panel.classList.contains("active");
-      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-      if (!isOpen) panel.classList.add("active");
+    // Function to initiate search for social media, news, sports, and stock data
+    async function search() {
+      const query = document.getElementById('searchQuery').value;
+
+      // Fetch data for all panels
+      fetchSocialMediaData(query);
+      fetchNewsData(query);
+      fetchSportsData(query);
+      fetchStockData(query);
+      fetchResearchData(query);
     }
 
-    // Function to toggle sub-panels (like Twitter, Instagram, etc.)
-    function toggleSubPanel(id) {
-      const content = document.getElementById(id);
-      content.classList.toggle("open");
-    }
+    // Fetch Twitter data (Social Media)
+    const fetchTwitterData = async (query) => {
+      const url = `https://api.twitter.com/2/tweets/search/recent?query=${query}&max_results=5`;
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer CSpKecPCNtO2WNbbi994ikW4g`
+        }
+      });
+      const data = await response.json();
+      displaySocialMediaResults(data.data);
+    };
 
-    // Search functionality
-    function handleSearch() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      const results = {
-        social: query.includes("twitter") || query.includes("reddit") ? 3 : 0,
-        news: query.includes("cnn") || query.includes("breaking") ? 2 : 0,
-        investing: query.includes("stocks") || query.includes("market") ? 4 : 0,
-        sports: query.includes("nba") || query.includes("football") ? 1 : 0,
-        research: query.includes("science") || query.includes("research") ? 5 : 0,
-      };
+    // Fetch Reddit data (Social Media)
+    const fetchRedditData = async (query) => {
+      const url = `https://www.reddit.com/r/all/search.json?q=${query}&sort=relevance&t=all`;
+      const response = await fetch(url);
+      const data = await response.json();
+      displaySocialMediaResults(data.data.children);
+    };
 
-      document.getElementById("socialCount").textContent = `Social Media: ${results.social}`;
-      document.getElementById("newsCount").textContent = `News Media: ${results.news}`;
-      document.getElementById("investingCount").textContent = `Investing: ${results.investing}`;
-      document.getElementById("sportsCount").textContent = `Sports: ${results.sports}`;
-      document.getElementById("researchCount").textContent = `Research: ${results.research}`;
+    // Fetch News data
+    const fetchNewsData = async (query) => {
+      const apiKey = 'YOUR_NEWS_API_KEY';
+      const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${apiKey}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      displayNewsResults(data.articles);
+    };
 
-      // Dynamically update results (this would pull in actual data in a real setup)
-      updateSocialMediaResults(query);
-      updateNewsResults(query);
-      updateInvestingResults(query);
-      updateSportsResults(query);
-      updateResearchResults(query);
-    }
+    // Fetch stock data (Investing)
+    const fetchStockData = async (query) => {
+      const apiKey = 'OX3H8PKIZFQ6OON3';
+      const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${query}&apikey=${apiKey}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      displayStockResults(data['Time Series (Daily)']);
+    };
 
-    // Function to update social media results (Twitter, Instagram, Reddit)
-    function updateSocialMediaResults(query) {
-      document.getElementById('twitterPanel').innerHTML = `Showing Twitter results for "${query}"`;
-      document.getElementById('instagramPanel').innerHTML = `Showing Instagram results for "${query}"`;
-      document.getElementById('redditPanel').innerHTML = `Showing Reddit results for "${query}"`;
-    }
+    // Fetch sports data
+    const fetchSportsData = async (query) => {
+      const url = 'https://api.sportsradar.com/sports/baseball/MLB/games?apikey=YOUR_SPORTS_RADAR_API_KEY';
+      const response = await fetch(url);
+      const data = await response.json();
+      displaySportsResults(data.games);
+    };
 
-    // Function to update news results
-    function updateNewsResults(query) {
-      document.querySelector('#newsPanel .panel-content').innerHTML = `Showing news articles for "${query}"`;
-    }
+    // Fetch research articles
+    const fetchResearchData = async (query) => {
+      const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${query}&retmax=10&usehistory=y&api_key=AIzaSyCMM4zkl_aW-pKsU3-gaeklQL7UiM6czDk`;
+      const response = await fetch(url);
+      const data = await response.text();
+      displayResearchResults(data);
+    };
 
-    // Function to update investing results
-    function updateInvestingResults(query) {
-      document.querySelector('#investingPanel .panel-content').innerHTML = `Showing investing articles for "${query}"`;
-    }
+    // Display Twitter data
+    const displaySocialMediaResults = (data) => {
+      const socialMediaPanel = document.getElementById('socialMediaPanel').querySelector('.panel-content');
+      socialMediaPanel.innerHTML = data.map(item => `
+        <div class="result-item">
+          <a href="https://twitter.com/${item.username}" target="_blank">${item.text}</a>
+        </div>
+      `).join('');
+    };
 
-    // Function to update sports results
-    function updateSportsResults(query) {
-      document.querySelector('#sportsPanel .panel-content').innerHTML = `Showing sports articles for "${query}"`;
-    }
+    // Display News data
+    const displayNewsResults = (articles) => {
+      const newsPanel = document.getElementById('newsPanel').querySelector('.panel-content');
+      newsPanel.innerHTML = articles.map(article => `
+        <div class="result-item">
+          <a href="${article.url}" target="_blank">${article.title}</a>
+        </div>
+      `).join('');
+    };
 
-    // Function to update research results
-    function updateResearchResults(query) {
-      document.querySelector('#researchPanel .panel-content').innerHTML = `Showing research results for "${query}"`;
-    }
+    // Display Stock data
+    const displayStockResults = (data) => {
+      const investingPanel = document.getElementById('investingPanel').querySelector('.panel-content');
+      investingPanel.innerHTML = Object.keys(data).map(date => `
+        <div class="result-item">
+          <span>${date}</span>: ${data[date]['4. close']}
+        </div>
+      `).join('');
+    };
+
+    // Display Sports data
+    const displaySportsResults = (games) => {
+      const sportsPanel = document.getElementById('sportsPanel').querySelector('.panel-content');
+      sportsPanel.innerHTML = games.map(game => `
+        <div class="result-item">
+          <span>${game.date}: ${game.home_team} vs ${game.away_team}</span>
+        </div>
+      `).join('');
+    };
+
+    // Display Research data
+    const displayResearchResults = (data) => {
+      const researchPanel = document.getElementById('researchPanel').querySelector('.panel-content');
+      researchPanel.innerHTML = `<pre>${data}</pre>`;
+    };
+
+    // Set up live tickers
+    const fetchLiveTickerData = async () => {
+      const sportsTicker = document.getElementById('sports-ticker');
+      const stockTicker = document.getElementById('stock-ticker');
+
+      // Example: fetching live sports and stock data (You can extend this)
+      sportsTicker.innerText = 'NBA: Lakers vs Celtics - Live Score: 98-100';
+      stockTicker.innerText = 'AAPL: $145.60 (+0.5%)';
+    };
+
+    // Initialize the tickers
+    fetchLiveTickerData();
+    setInterval(fetchLiveTickerData, 60000);
   </script>
 </body>
+
 </html>
