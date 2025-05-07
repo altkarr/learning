@@ -28,7 +28,17 @@
     <h1>To-Gather</h1>
     <p>Select a category to explore aggregated content.</p>
   </header>
-
+  <div class="search-section">
+  <input type="text" id="searchInput" placeholder="Search across all categories..." />
+  <button onclick="handleSearch()">Search</button>
+  
+  <div class="results-summary">
+    <div id="socialCount">Social Media: 0</div>
+    <div id="newsCount">News Media: 0</div>
+    <div id="investingCount">Investing: 0</div>
+    <div id="sportsCount">Sports: 0</div>
+  </div>
+</div>
   <main class="panel-grid">
     <div class="panel" onclick="togglePanel(this)">
   <div class="panel-header">
@@ -80,5 +90,24 @@
       }
     }
   </script>
+  <script>
+function handleSearch() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+
+  // For now, simulate results with dummy logic
+  const results = {
+    social: query.includes("twitter") || query.includes("reddit") ? 3 : 0,
+    news: query.includes("cnn") || query.includes("breaking") ? 2 : 0,
+    investing: query.includes("stocks") || query.includes("market") ? 4 : 0,
+    sports: query.includes("nba") || query.includes("football") ? 1 : 0,
+  };
+
+  // Update UI
+  document.getElementById("socialCount").textContent = `Social Media: ${results.social}`;
+  document.getElementById("newsCount").textContent = `News Media: ${results.news}`;
+  document.getElementById("investingCount").textContent = `Investing: ${results.investing}`;
+  document.getElementById("sportsCount").textContent = `Sports: ${results.sports}`;
+}
+</script>
 </body>
 </html>
