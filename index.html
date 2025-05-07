@@ -16,10 +16,47 @@
   </header>
 
   <main class="panel-grid">
-    <div class="panel social">Social Media</div>
-    <div class="panel news">News Media</div>
-    <div class="panel investing">Investing</div>
-    <div class="panel sports">Sports</div>
+    <div class="panel" onclick="togglePanel(this)">
+      <div class="panel-header">Social Media</div>
+      <div class="panel-content">
+        <p>Live social media feeds will go here.</p>
+      </div>
+    </div>
+
+    <div class="panel" onclick="togglePanel(this)">
+      <div class="panel-header">News Media</div>
+      <div class="panel-content">
+        <p>Latest news from public sources will display here.</p>
+      </div>
+    </div>
+
+    <div class="panel" onclick="togglePanel(this)">
+      <div class="panel-header">Investing</div>
+      <div class="panel-content">
+        <p>Market data and financial updates will be shown here.</p>
+      </div>
+    </div>
+
+    <div class="panel" onclick="togglePanel(this)">
+      <div class="panel-header">Sports</div>
+      <div class="panel-content">
+        <p>Sports scores, updates, and headlines will load here.</p>
+      </div>
+    </div>
   </main>
+
+  <script>
+    function togglePanel(panel) {
+      const isActive = panel.classList.contains('active');
+
+      // Close all panels
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+
+      // Toggle current
+      if (!isActive) {
+        panel.classList.add('active');
+      }
+    }
+  </script>
 </body>
 </html>
