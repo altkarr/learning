@@ -40,21 +40,40 @@ p {
 /* Panel styling */
 .panel {
   background-color: #fff;
-  padding: 40px;
+  padding: 20px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   font-size: 1.5rem;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
 .panel:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.panel-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.panel-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* When active, expand the content */
+.panel.active .panel-content {
+  max-height: 300px;
+  margin-top: 10px;
 }
 
 /* Optional: Panel-specific colors */
-.social { background-color: #e0f7fa; }
-.news { background-color: #fce4ec; }
-.investing { background-color: #f3e5f5; }
-.sports { background-color: #e8f5e9; }
+.panel:nth-child(1) { background-color: #e0f7fa; }
+.panel:nth-child(2) { background-color: #fce4ec; }
+.panel:nth-child(3) { background-color: #f3e5f5; }
+.panel:nth-child(4) { background-color: #e8f5e9; }
