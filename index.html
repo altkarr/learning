@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -17,7 +18,7 @@
   </header>
 
   <div class="search-section">
-    <input type="text" id="searchInput" placeholder="Search across all categories..." />
+    <input type="text" id="searchInput" placeholder="Search across all categories..." oninput="handleSearch()" />
     <button onclick="handleSearch()">Search</button>
     <div class="results-summary">
       <div id="socialCount" onclick="togglePanel('socialMediaPanel')">Social Media: 0</div>
@@ -31,68 +32,97 @@
   <main class="panel-grid">
     <!-- Social Media Panel -->
     <div class="panel" id="socialMediaPanel">
-      <div class="panel-header">
-        <i class="fab fa-hashtag"></i> Social Media
+      <div class="panel-header" onclick="togglePanel('socialMediaPanel')">
+        <i class="fab fa-hashtag"></i>
+        <span>Social Media</span>
+        <span class="arrow">▼</span>
       </div>
       <div class="panel-content">
+        <!-- Twitter -->
         <div class="sub-panel">
           <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
-          <div class="sub-panel-content" id="twitterPanel"></div>
+          <div class="sub-panel-content" id="twitterPanel">
+            <!-- Results will populate here dynamically -->
+          </div>
         </div>
+
+        <!-- Instagram -->
         <div class="sub-panel">
           <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
-          <div class="sub-panel-content" id="instagramPanel"></div>
+          <div class="sub-panel-content" id="instagramPanel">
+            <!-- Results will populate here dynamically -->
+          </div>
         </div>
+
+        <!-- Reddit -->
         <div class="sub-panel">
           <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit</div>
-          <div class="sub-panel-content" id="redditPanel"></div>
+          <div class="sub-panel-content" id="redditPanel">
+            <!-- Results will populate here dynamically -->
+          </div>
         </div>
       </div>
     </div>
 
     <!-- News Media Panel -->
     <div class="panel" id="newsPanel">
-      <div class="panel-header">
+      <div class="panel-header" onclick="togglePanel('newsPanel')">
         <i class="fas fa-newspaper"></i> News Media
       </div>
       <div class="panel-content">
-        <div class="bias-meter-legend">
-          <span>Left</span>
-          <div class="bias-bar"><span class="bias-indicator" style="left: 40%"></span></div>
-          <span>Right</span>
-        </div>
-        <div id="newsResults"></div>
+        <!-- News articles will populate here dynamically -->
       </div>
     </div>
 
     <!-- Investing Panel -->
     <div class="panel" id="investingPanel">
-      <div class="panel-header">
+      <div class="panel-header" onclick="togglePanel('investingPanel')">
         <i class="fas fa-chart-line"></i> Investing
-        <marquee class="ticker" behavior="scroll" direction="left">Loading live market data...</marquee>
       </div>
-      <div class="panel-content" id="investingResults"></div>
+      <div class="panel-content">
+        <!-- Stock related articles and tickers -->
+        <div class="investing-ticker" id="investingTicker">
+          <div class="ticker">
+            <div class="ticker-item">Stock: Tesla - $800 +2%</div>
+            <div class="ticker-item">Stock: Apple - $150 +1.5%</div>
+            <div class="ticker-item">Stock: Amazon - $3500 +3%</div>
+          </div>
+        </div>
+        <!-- Articles related to investing will appear here -->
+      </div>
     </div>
 
     <!-- Sports Panel -->
     <div class="panel" id="sportsPanel">
-      <div class="panel-header">
+      <div class="panel-header" onclick="togglePanel('sportsPanel')">
         <i class="fas fa-football-ball"></i> Sports
-        <marquee class="ticker" behavior="scroll" direction="left">Live scores updating...</marquee>
       </div>
-      <div class="panel-content" id="sportsResults"></div>
+      <div class="panel-content">
+        <!-- Sports scores ticker -->
+        <div class="sports-ticker" id="sportsTicker">
+          <div class="ticker">
+            <div class="ticker-item">NBA: Lakers 110 - 100 Celtics</div>
+            <div class="ticker-item">NHL: Leafs 2 - 1 Bruins</div>
+            <div class="ticker-item">MLB: Yankees 5 - 3 Red Sox</div>
+          </div>
+        </div>
+        <!-- Sports articles will appear here -->
+      </div>
     </div>
 
     <!-- Research Panel -->
     <div class="panel" id="researchPanel">
-      <div class="panel-header">
+      <div class="panel-header" onclick="togglePanel('researchPanel')">
         <i class="fas fa-book"></i> Research
       </div>
-      <div class="panel-content" id="researchResults"></div>
+      <div class="panel-content">
+        <!-- Google Scholar search or Research Articles will be linked here -->
+      </div>
     </div>
   </main>
 
   <script>
+    // Function to toggle panels
     function togglePanel(id) {
       const panel = document.getElementById(id);
       const isOpen = panel.classList.contains("active");
@@ -100,11 +130,13 @@
       if (!isOpen) panel.classList.add("active");
     }
 
+    // Function to toggle sub-panels (like Twitter, Instagram, etc.)
     function toggleSubPanel(id) {
       const content = document.getElementById(id);
       content.classList.toggle("open");
     }
 
+    // Search functionality
     function handleSearch() {
       const query = document.getElementById("searchInput").value.toLowerCase();
       const results = {
@@ -112,7 +144,7 @@
         news: query.includes("cnn") || query.includes("breaking") ? 2 : 0,
         investing: query.includes("stocks") || query.includes("market") ? 4 : 0,
         sports: query.includes("nba") || query.includes("football") ? 1 : 0,
-        research: query.includes("science") || query.includes("researchers") ? 5 : 0,
+        research: query.includes("science") || query.includes("research") ? 5 : 0,
       };
 
       document.getElementById("socialCount").textContent = `Social Media: ${results.social}`;
@@ -120,6 +152,40 @@
       document.getElementById("investingCount").textContent = `Investing: ${results.investing}`;
       document.getElementById("sportsCount").textContent = `Sports: ${results.sports}`;
       document.getElementById("researchCount").textContent = `Research: ${results.research}`;
+
+      // Dynamically update results (this would pull in actual data in a real setup)
+      updateSocialMediaResults(query);
+      updateNewsResults(query);
+      updateInvestingResults(query);
+      updateSportsResults(query);
+      updateResearchResults(query);
+    }
+
+    // Function to update social media results (Twitter, Instagram, Reddit)
+    function updateSocialMediaResults(query) {
+      document.getElementById('twitterPanel').innerHTML = `Showing Twitter results for "${query}"`;
+      document.getElementById('instagramPanel').innerHTML = `Showing Instagram results for "${query}"`;
+      document.getElementById('redditPanel').innerHTML = `Showing Reddit results for "${query}"`;
+    }
+
+    // Function to update news results
+    function updateNewsResults(query) {
+      document.querySelector('#newsPanel .panel-content').innerHTML = `Showing news articles for "${query}"`;
+    }
+
+    // Function to update investing results
+    function updateInvestingResults(query) {
+      document.querySelector('#investingPanel .panel-content').innerHTML = `Showing investing articles for "${query}"`;
+    }
+
+    // Function to update sports results
+    function updateSportsResults(query) {
+      document.querySelector('#sportsPanel .panel-content').innerHTML = `Showing sports articles for "${query}"`;
+    }
+
+    // Function to update research results
+    function updateResearchResults(query) {
+      document.querySelector('#researchPanel .panel-content').innerHTML = `Showing research results for "${query}"`;
     }
   </script>
 </body>
