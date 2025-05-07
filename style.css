@@ -1,26 +1,60 @@
-body {
-  background-color: #f0f4f8;
-  font-family: "Hanalei Fill", system-ui; /* Added system-ui as a fallback */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.hanalei-fill-regular {
-  font-family: "Hanalei Fill", system-ui;
-  font-weight: 400; /* Ensure the correct weight is applied */
-  font-style: normal; /* Ensure the font is not italicized */
+body {
+  font-family: 'Hanalei Fill', system-ui;
+  background-color: #f0f4f8;
+  color: #2c3e50;
   text-align: center;
-  padding: 50px;
+  padding: 20px;
+}
+
+/* Header styles */
+header {
+  margin-bottom: 40px;
 }
 
 h1 {
-  color: #2c3e50;
-  font-family: "Hanalei Fill", system-ui; /* Apply font to h1 */
-  font-weight: 400; /* Ensure it is the regular weight */
-  font-style: normal; /* Ensure it is not italicized */
+  font-size: 3rem;
+  margin-bottom: 10px;
 }
 
 p {
-  color: #555;
-  font-family: "Hanalei Fill", system-ui; /* Apply font to p */
-  font-weight: 400; /* Ensure it is the regular weight */
-  font-style: normal; /* Ensure it is not italicized */
+  font-size: 1.2rem;
+  color: #666;
 }
+
+/* Grid layout for panels */
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Panel styling */
+.panel {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.panel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Optional: Panel-specific colors */
+.social { background-color: #e0f7fa; }
+.news { background-color: #fce4ec; }
+.investing { background-color: #f3e5f5; }
+.sports { background-color: #e8f5e9; }
