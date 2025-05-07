@@ -1,109 +1,88 @@
 body {
-  font-family: "Hanalei Fill", system-ui;
-  background-color: #f0f4f8;
+  font-family: 'Hanalei Fill', cursive;
   margin: 0;
   padding: 0;
+  background-color: #f2f2f2;
   color: #333;
 }
 
 header {
-  text-align: center;
-  padding: 2rem;
-  background-color: #2c3e50;
+  background-color: #0b3954;
   color: white;
-}
-
-h1 {
-  font-size: 2.5rem;
-  margin: 0;
+  padding: 1rem;
+  text-align: center;
 }
 
 .search-section {
-  text-align: center;
   padding: 1rem;
+  text-align: center;
+  background: #e0e0e0;
 }
 
-input[type="text"] {
+.search-section input[type="text"] {
   padding: 0.5rem;
   width: 60%;
-  font-size: 1rem;
-  margin-right: 0.5rem;
-}
-
-button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-}
-
-.results-summary {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-}
-
-.results-summary div {
-  cursor: pointer;
-  padding: 0.3rem 0.6rem;
-  background-color: #e3e3e3;
+  max-width: 400px;
   border-radius: 5px;
-  margin: 0.2rem;
+  border: 1px solid #ccc;
+}
+
+.search-section button {
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  background-color: #0b3954;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .panel-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
   padding: 1rem;
 }
 
 .panel {
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .panel-header {
-  display: flex;
-  justify-content: space-between;
   padding: 1rem;
-  background: #34495e;
+  font-size: 1.5rem;
+  background: #003f5c;
   color: white;
-  cursor: pointer;
-  font-size: 1.25rem;
-  align-items: center;
+  cursor: default;
 }
 
 .panel-content {
-  display: none;
   padding: 1rem;
 }
 
-.panel.active .panel-content {
-  display: block;
-}
-
 .sub-panel {
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid #ccc;
 }
 
 .sub-panel-header {
-  font-weight: bold;
+  padding: 0.75rem;
+  background: #f0f0f0;
   cursor: pointer;
-  padding: 0.5rem;
-  background: #ecf0f1;
-  border-radius: 5px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .sub-panel-content {
-  display: none;
   padding: 0.5rem 1rem;
-  background-color: #f9f9f9;
-  border-left: 4px solid #2980b9;
+  display: none;
 }
 
-.sub-panel-content.active {
+.sub-panel-content.open {
   display: block;
 }
 
@@ -117,4 +96,15 @@ button {
   width: 24px;
   height: 24px;
   margin-right: 0.5rem;
+  border-radius: 4px;
+}
+
+.result-item a {
+  text-decoration: none;
+  color: #0b3954;
+  font-weight: bold;
+}
+
+.result-item a:hover {
+  text-decoration: underline;
 }
