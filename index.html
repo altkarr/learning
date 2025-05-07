@@ -19,6 +19,19 @@
   <div class="search-section">
     <input type="text" id="searchInput" placeholder="Search across all categories..." />
     <button onclick="handleSearch()">Search</button>
+    <div class="refinement-controls">
+      <select id="redditTime">
+        <option value="day">Past Day</option>
+        <option value="week" selected>Past Week</option>
+        <option value="month">Past Month</option>
+        <option value="year">Past Year</option>
+      </select>
+      <select id="redditSort">
+        <option value="top" selected>Top</option>
+        <option value="new">New</option>
+        <option value="comments">Most Commented</option>
+      </select>
+    </div>
     <div class="results-summary">
       <div id="socialCount" onclick="togglePanel('socialMediaPanel')">Social Media: 0</div>
       <div id="newsCount">News Media: 0</div>
@@ -28,128 +41,75 @@
     </div>
   </div>
 
+  <div class="ticker">
+    <div id="sportsTicker">Live Sports Scores Ticker...</div>
+    <div id="investingTicker">Market & Finance Ticker...</div>
+  </div>
+
   <main class="panel-grid">
     <!-- Social Media Panel -->
     <div class="panel" id="socialMediaPanel">
       <div class="panel-header" onclick="togglePanel('socialMediaPanel')">
-        <i class="fab fa-hashtag"></i>
-        <span>Social Media</span>
+        <i class="fab fa-hashtag"></i> <span>Social Media</span>
         <span class="arrow">▼</span>
       </div>
       <div class="panel-content">
-        <!-- Twitter -->
         <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X (<span id="twitterCount">0</span>)</div>
+          <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
           <div class="sub-panel-content" id="twitterPanel"></div>
         </div>
-
-        <!-- Instagram -->
         <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram (<span id="instagramCount">0</span>)</div>
+          <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
           <div class="sub-panel-content" id="instagramPanel"></div>
         </div>
-
-        <!-- Reddit -->
         <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit (<span id="redditCount">0</span>)</div>
+          <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit</div>
           <div class="sub-panel-content" id="redditPanel"></div>
         </div>
       </div>
     </div>
 
-    <!-- Other Panels (placeholders) -->
+    <!-- News Media Panel -->
     <div class="panel">
       <div class="panel-header">
         <i class="fas fa-newspaper"></i> News Media
       </div>
-      <div class="panel-content">Top headlines go here.</div>
+      <div class="panel-content" id="newsPanel">
+        <!-- News stories with bias meter and timeframe filter will go here -->
+      </div>
     </div>
 
+    <!-- Investing Panel -->
     <div class="panel">
       <div class="panel-header">
         <i class="fas fa-chart-line"></i> Investing
       </div>
-      <div class="panel-content">Stock market data goes here.</div>
+      <div class="panel-content" id="investingPanel">
+        <!-- Finance-related articles & trends -->
+      </div>
     </div>
 
+    <!-- Sports Panel -->
     <div class="panel">
       <div class="panel-header">
         <i class="fas fa-football-ball"></i> Sports
       </div>
-      <div class="panel-content">Live scores and stats go here.</div>
+      <div class="panel-content" id="sportsPanel">
+        <!-- Sports news breakdown by league -->
+      </div>
     </div>
 
+    <!-- Research Panel -->
     <div class="panel">
       <div class="panel-header">
         <i class="fas fa-book"></i> Research
       </div>
-      <div class="panel-content">Scientific research content goes here.</div>
+      <div class="panel-content" id="researchPanel">
+        <!-- Pulled Google Scholar or ResearchGate articles -->
+      </div>
     </div>
   </main>
 
-  <script>
-    function togglePanel(id) {
-      const panel = document.getElementById(id);
-      const isOpen = panel.classList.contains("active");
-      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-      if (!isOpen) panel.classList.add("active");
-    }
-
-    function toggleSubPanel(id) {
-      const content = document.getElementById(id);
-      content.classList.toggle("active");
-    }
-
-    async function handleSearch() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      const results = {
-        social: 0,
-        reddit: 0,
-        twitter: 0,
-        instagram: 0,
-        news: query.includes("cnn") || query.includes("breaking") ? 2 : 0,
-        investing: query.includes("stocks") || query.includes("market") ? 4 : 0,
-        sports: query.includes("nba") || query.includes("football") ? 1 : 0,
-        research: query.includes("science") || query.includes("researchers") ? 5 : 0,
-      };
-
-      const redditPanel = document.getElementById("redditPanel");
-      redditPanel.innerHTML = "";
-
-      if (query.length > 0) {
-        const res = await fetch(`https://www.reddit.com/search.json?q=${query}&limit=50`);
-        const data = await res.json();
-        results.reddit = data.data.children.length;
-        results.social += results.reddit;
-
-        data.data.children.forEach(post => {
-          const link = document.createElement("a");
-          link.href = `https://reddit.com${post.data.permalink}`;
-          link.textContent = post.data.title;
-          link.target = "_blank";
-
-          const item = document.createElement("div");
-          item.className = "result-item";
-          const img = document.createElement("img");
-          img.src = "https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-180x180.png";
-          img.alt = "Reddit";
-          item.appendChild(img);
-          item.appendChild(link);
-
-          redditPanel.appendChild(item);
-        });
-      }
-
-      document.getElementById("redditCount").textContent = results.reddit;
-      document.getElementById("twitterCount").textContent = results.twitter;
-      document.getElementById("instagramCount").textContent = results.instagram;
-
-      document.getElementById("socialCount").textContent = `Social Media: ${results.social}`;
-      document.getElementById("newsCount").textContent = `News Media: ${results.news}`;
-      document.getElementById("investingCount").textContent = `Investing: ${results.investing}`;
-      document.getElementById("sportsCount").textContent = `Sports: ${results.sports}`;
-      document.getElementById("researchCount").textContent = `Research: ${results.research}`;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
