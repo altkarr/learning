@@ -14,6 +14,21 @@ header {
   text-align: center;
 }
 
+.category-tickers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.ticker {
+  background-color: #003f5c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  flex: 1;
+}
+
 .search-section {
   padding: 1rem;
   text-align: center;
