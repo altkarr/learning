@@ -102,7 +102,7 @@ const fetchRedditData = async (query) => {
 
 // Fetch News data
 const fetchNewsData = async (query) => {
-  const apiKey = 'YOUR_NEWS_API_KEY';
+  const apiKey = 'YOUR_NEWS_API_KEY';  // Your News API key goes here
   const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${apiKey}`;
   try {
     const response = await fetch(url);
@@ -116,7 +116,7 @@ const fetchNewsData = async (query) => {
 
 // Fetch stock data (Investing)
 const fetchStockData = async (query) => {
-  const apiKey = 'OX3H8PKIZFQ6OON3';
+  const apiKey = 'OX3H8PKIZFQ6OON3';  // Your AlphaVantage API key goes here
   const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${query}&apikey=${apiKey}`;
   try {
     const response = await fetch(url);
@@ -130,7 +130,8 @@ const fetchStockData = async (query) => {
 
 // Fetch sports data
 const fetchSportsData = async (query) => {
-  const url = 'https://api.sportsradar.com/sports/baseball/MLB/games?apikey=YOUR_SPORTS_RADAR_API_KEY';
+  const apiKey = 'YOUR_SPORTS_RADAR_API_KEY';  // Your SportsRadar API key goes here
+  const url = `https://api.sportsradar.com/sports/baseball/MLB/games?apikey=${apiKey}`;
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error('Failed to fetch Sports data');
@@ -143,7 +144,7 @@ const fetchSportsData = async (query) => {
 
 // Fetch research articles
 const fetchResearchData = async (query) => {
-  const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${query}&retmax=10&usehistory=y&api_key=AIzaSyCMM4zkl_aW-pKsU3-gaeklQL7UiM6czDk`;
+  const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${query}&retmax=10&usehistory=y&api_key=AIzaSyCMM4zkl_aW-pKsU3-gaeklQL7UiM6czDk`;  // PubMed API key integrated here
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error('Failed to fetch Research data');
