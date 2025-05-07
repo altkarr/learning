@@ -10,131 +10,140 @@
   <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<script>
-  function togglePanel(panel) {
-    const isActive = panel.classList.contains('active');
-
-    // Close all panels
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-
-    // Toggle current
-    if (!isActive) {
-      panel.classList.add('active');
-    }
-  }
-</script>
 <body>
   <header>
     <h1>To-Gather</h1>
     <p>Select a category to explore aggregated content.</p>
   </header>
   <div class="search-section">
-  <input type="text" id="searchInput" placeholder="Search across all categories..." />
-  <button onclick="handleSearch()">Search</button>
-  <div class="results-summary">
-    <div id="socialCount">Social Media: 0</div>
-    <div id="newsCount">News Media: 0</div>
-    <div id="investingCount">Investing: 0</div>
-    <div id="sportsCount">Sports: 0</div>
-    <div id="researchCount">Research: 0</div>
+    <input type="text" id="searchInput" placeholder="Search across all categories..." />
+    <button onclick="handleSearch()">Search</button>
+    <div class="results-summary">
+      <div id="socialCount" onclick="expandSocialPanel()">Social Media: 0</div>
+      <div id="newsCount">News Media: 0</div>
+      <div id="investingCount">Investing: 0</div>
+      <div id="sportsCount">Sports: 0</div>
+      <div id="researchCount">Research: 0</div>
+    </div>
   </div>
-</div>
+
   <main class="panel-grid">
     <div class="panel">
-  <div class="panel-header" onclick="togglePanel('socialMediaPanel')">
-    <span>Social Media</span>
-    <span class="arrow">▼</span>
-  </div>
-  <div class="panel-content" id="socialMediaPanel">
-
-    <!-- Subcategories: Twitter, Instagram, etc. -->
-    <div class="sub-panel">
-      <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
-      <div class="sub-panel-content" id="twitterPanel">
-        <!-- Sample content -->
-        <div class="result-item">
-          <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter Icon">
-          <a href="https://twitter.com/example" target="_blank">Post about AI breakthroughs</a>
+      <div class="panel-header" onclick="toggleSubPanel('socialMediaPanel')">
+        <i class="fas fa-hashtag"></i> Social Media
+      </div>
+      <div class="panel-content" id="socialMediaPanel">
+        <div class="sub-panel">
+          <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
+          <div class="sub-panel-content" id="twitterPanel"></div>
+        </div>
+        <div class="sub-panel">
+          <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
+          <div class="sub-panel-content" id="instagramPanel"></div>
+        </div>
+        <div class="sub-panel">
+          <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit</div>
+          <div class="sub-panel-content" id="redditPanel"></div>
+        </div>
+        <div class="sub-panel">
+          <div class="sub-panel-header" onclick="toggleSubPanel('onlyfansPanel')">OnlyFans</div>
+          <div class="sub-panel-content" id="onlyfansPanel"></div>
         </div>
       </div>
     </div>
 
-    <div class="sub-panel">
-      <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
-      <div class="sub-panel-content" id="instagramPanel">
-        <div class="result-item">
-          <img src="https://instagram.com/static/images/ico/favicon-200.png/ab6eff595bb1.png" alt="Instagram Icon">
-          <a href="
-<div class="panel" onclick="togglePanel(this)">
-  <div class="panel-header">
-    <i class="fas fa-newspaper"></i> News Media
-  </div>
-  <div class="panel-content">
-    <p>Top headlines, RSS feeds, and articles will populate here.</p>
-  </div>
-</div>
+    <div class="panel" onclick="togglePanel(this)">
+      <div class="panel-header">
+        <i class="fas fa-newspaper"></i> News Media
+      </div>
+      <div class="panel-content">
+        <p>Top headlines, RSS feeds, and articles will populate here.</p>
+      </div>
+    </div>
 
-<div class="panel" onclick="togglePanel(this)">
-  <div class="panel-header">
-    <i class="fas fa-chart-line"></i> Investing
-  </div>
-  <div class="panel-content">
-    <p>Stock tickers, charts, and financial data will show here.</p>
-  </div>
-</div>
+    <div class="panel" onclick="togglePanel(this)">
+      <div class="panel-header">
+        <i class="fas fa-chart-line"></i> Investing
+      </div>
+      <div class="panel-content">
+        <p>Stock tickers, charts, and financial data will show here.</p>
+      </div>
+    </div>
 
-<div class="panel" onclick="togglePanel(this)">
-  <div class="panel-header">
-    <i class="fas fa-basketball-ball"></i> Sports
-  </div>
-  <div class="panel-content">
-    <p>Live scores, player stats, and schedules will be shown here.</p>
-  </div>
-</div>
+    <div class="panel" onclick="togglePanel(this)">
+      <div class="panel-header">
+        <i class="fas fa-basketball-ball"></i> Sports
+      </div>
+      <div class="panel-content">
+        <p>Live scores, player stats, and schedules will be shown here.</p>
+      </div>
+    </div>
 
-<div class="panel" onclick="togglePanel(this)">
-  <div class="panel-header">
-    <i class="fa-solid fa-book"></i> Research
-  </div>
-  <div class="panel-content">
-    <p>Research studies, articles and insights will be shown here.</p>
-  </div>
-</div>
+    <div class="panel" onclick="togglePanel(this)">
+      <div class="panel-header">
+        <i class="fa-solid fa-book"></i> Research
+      </div>
+      <div class="panel-content">
+        <p>Research studies, articles and insights will be shown here.</p>
+      </div>
+    </div>
   </main>
 
   <script>
     function togglePanel(panel) {
       const isActive = panel.classList.contains('active');
-
-      // Close all panels
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      if (!isActive) panel.classList.add('active');
+    }
 
-      // Toggle current
-      if (!isActive) {
-        panel.classList.add('active');
+    function toggleSubPanel(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function expandSocialPanel() {
+      document.getElementById('socialMediaPanel').style.display = 'block';
+    }
+
+    function injectResults(containerId, results) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      if (results.length === 0) {
+        container.innerHTML = "<p>No results found.</p>";
+        return;
       }
+      results.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "result-item";
+        div.innerHTML = `
+          <img src="${item.image}" alt="Preview">
+          <a href="${item.url}" target="_blank">${item.title}</a>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function handleSearch() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const socialResults = {
+        twitter: [
+          { title: "Tweet about AI", url: "https://twitter.com/example1", image: "https://placekitten.com/60/60" },
+          { title: "Tech Tweet", url: "https://twitter.com/example2", image: "https://placekitten.com/61/60" }
+        ],
+        instagram: [
+          { title: "Design Trends", url: "https://instagram.com/example", image: "https://placekitten.com/62/60" }
+        ],
+        reddit: [],
+        onlyfans: []
+      };
+      const count = Object.values(socialResults).reduce((sum, arr) => sum + arr.length, 0);
+      document.getElementById("socialCount").textContent = `Social Media: ${count}`;
+      expandSocialPanel();
+      injectResults("twitterPanel", socialResults.twitter);
+      injectResults("instagramPanel", socialResults.instagram);
+      injectResults("redditPanel", socialResults.reddit);
+      injectResults("onlyfansPanel", socialResults.onlyfans);
     }
   </script>
-  <script>
-function handleSearch() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-
-  // For now, simulate results with dummy logic
-  const results = {
-    social: query.includes("twitter") || query.includes("reddit") ? 3 : 0,
-    news: query.includes("cnn") || query.includes("breaking") ? 2 : 0,
-    investing: query.includes("stocks") || query.includes("market") ? 4 : 0,
-    sports: query.includes("nba") || query.includes("football") ? 1 : 0,
-    research: query.includes("science") || query.includes("researchers") ? 5 : 0,
-  };
-
-  // Update UI
-  document.getElementById("socialCount").textContent = `Social Media: ${results.social}`;
-  document.getElementById("newsCount").textContent = `News Media: ${results.news}`;
-  document.getElementById("investingCount").textContent = `Investing: ${results.investing}`;
-  document.getElementById("sportsCount").textContent = `Sports: ${results.sports}`;
-  document.getElementById("researchCount").textContent = `Research: ${results.research}`;
-}
-</script>
 </body>
 </html>
