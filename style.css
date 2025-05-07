@@ -1,10 +1,10 @@
 body {
   background-color: #f0f4f8;
-  font-family: "Mrs Sheppards", cursive; /* 'cursive' fallback should remain here just in case */
+  font-family: "Mrs Sheppards"; /* 'cursive' fallback should remain here just in case */
 }
 
 .mrs-sheppards-regular {
-  font-family: "Mrs Sheppards", cursive; /* Same here: remove 'cursive' if not needed */
+  font-family: "Mrs Sheppards"; /* Same here: remove 'cursive' if not needed */
   font-weight: 400;
   font-style: normal;
   text-align: center;
@@ -13,7 +13,7 @@ body {
 
 h1 {
   color: #2c3e50;
-  font-family: "Mrs Sheppards", cursive; /* Same fix for h1 */
+  font-family: "Mrs Sheppards"; /* Same fix for h1 */
 }
 
 p {
