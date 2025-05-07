@@ -56,70 +56,103 @@
 
   <script>
     // Function to initiate search for social media, news, sports, and stock data
-    async function search() {
-      const query = document.getElementById('searchQuery').value;
+async function search() {
+  const query = document.getElementById('searchQuery').value;
+  try {
+    // Fetch data for all panels
+    await fetchSocialMediaData(query);
+    await fetchNewsData(query);
+    await fetchSportsData(query);
+    await fetchStockData(query);
+    await fetchResearchData(query);
+  } catch (error) {
+    console.error('Error during search:', error);
+  }
+}
 
-      // Fetch data for all panels
-      fetchSocialMediaData(query);
-      fetchNewsData(query);
-      fetchSportsData(query);
-      fetchStockData(query);
-      fetchResearchData(query);
-    }
+// Fetch Twitter data (Social Media)
+const fetchTwitterData = async (query) => {
+  const url = `https://api.twitter.com/2/tweets/search/recent?query=${query}&max_results=5`;
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer CSpKecPCNtO2WNbbi994ikW4g`
+      }
+    });
+    if (!response.ok) throw new Error('Failed to fetch Twitter data');
+    const data = await response.json();
+    displaySocialMediaResults(data.data);
+  } catch (error) {
+    console.error('Error fetching Twitter data:', error);
+  }
+};
 
-    // Fetch Twitter data (Social Media)
-    const fetchTwitterData = async (query) => {
-      const url = `https://api.twitter.com/2/tweets/search/recent?query=${query}&max_results=5`;
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer CSpKecPCNtO2WNbbi994ikW4g`
-        }
-      });
-      const data = await response.json();
-      displaySocialMediaResults(data.data);
-    };
+// Fetch Reddit data (Social Media)
+const fetchRedditData = async (query) => {
+  const url = `https://www.reddit.com/r/all/search.json?q=${query}&sort=relevance&t=all`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to fetch Reddit data');
+    const data = await response.json();
+    displaySocialMediaResults(data.data.children);
+  } catch (error) {
+    console.error('Error fetching Reddit data:', error);
+  }
+};
 
-    // Fetch Reddit data (Social Media)
-    const fetchRedditData = async (query) => {
-      const url = `https://www.reddit.com/r/all/search.json?q=${query}&sort=relevance&t=all`;
-      const response = await fetch(url);
-      const data = await response.json();
-      displaySocialMediaResults(data.data.children);
-    };
+// Fetch News data
+const fetchNewsData = async (query) => {
+  const apiKey = 'YOUR_NEWS_API_KEY';
+  const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${apiKey}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to fetch News data');
+    const data = await response.json();
+    displayNewsResults(data.articles);
+  } catch (error) {
+    console.error('Error fetching News data:', error);
+  }
+};
 
-    // Fetch News data
-    const fetchNewsData = async (query) => {
-      const apiKey = 'YOUR_NEWS_API_KEY';
-      const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${apiKey}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      displayNewsResults(data.articles);
-    };
+// Fetch stock data (Investing)
+const fetchStockData = async (query) => {
+  const apiKey = 'OX3H8PKIZFQ6OON3';
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${query}&apikey=${apiKey}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to fetch Stock data');
+    const data = await response.json();
+    displayStockResults(data['Time Series (Daily)']);
+  } catch (error) {
+    console.error('Error fetching Stock data:', error);
+  }
+};
 
-    // Fetch stock data (Investing)
-    const fetchStockData = async (query) => {
-      const apiKey = 'OX3H8PKIZFQ6OON3';
-      const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${query}&apikey=${apiKey}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      displayStockResults(data['Time Series (Daily)']);
-    };
+// Fetch sports data
+const fetchSportsData = async (query) => {
+  const url = 'https://api.sportsradar.com/sports/baseball/MLB/games?apikey=YOUR_SPORTS_RADAR_API_KEY';
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to fetch Sports data');
+    const data = await response.json();
+    displaySportsResults(data.games);
+  } catch (error) {
+    console.error('Error fetching Sports data:', error);
+  }
+};
 
-    // Fetch sports data
-    const fetchSportsData = async (query) => {
-      const url = 'https://api.sportsradar.com/sports/baseball/MLB/games?apikey=YOUR_SPORTS_RADAR_API_KEY';
-      const response = await fetch(url);
-      const data = await response.json();
-      displaySportsResults(data.games);
-    };
-
-    // Fetch research articles
-    const fetchResearchData = async (query) => {
-      const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${query}&retmax=10&usehistory=y&api_key=AIzaSyCMM4zkl_aW-pKsU3-gaeklQL7UiM6czDk`;
-      const response = await fetch(url);
-      const data = await response.text();
-      displayResearchResults(data);
-    };
+// Fetch research articles
+const fetchResearchData = async (query) => {
+  const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${query}&retmax=10&usehistory=y&api_key=AIzaSyCMM4zkl_aW-pKsU3-gaeklQL7UiM6czDk`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to fetch Research data');
+    const data = await response.text();
+    displayResearchResults(data);
+  } catch (error) {
+    console.error('Error fetching Research data:', error);
+  }
+};
 
     // Display Twitter data
     const displaySocialMediaResults = (data) => {
