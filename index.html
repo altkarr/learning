@@ -39,46 +39,20 @@
       <div class="panel-content">
         <!-- Twitter -->
         <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
-          <div class="sub-panel-content" id="twitterPanel">
-            <div class="result-item">
-              <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter">
-              <a href="https://twitter.com/example" target="_blank">Post about AI breakthroughs</a>
-            </div>
-          </div>
+          <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X (<span id="twitterCount">0</span>)</div>
+          <div class="sub-panel-content" id="twitterPanel"></div>
         </div>
 
         <!-- Instagram -->
         <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
-          <div class="sub-panel-content" id="instagramPanel">
-            <div class="result-item">
-              <img src="https://instagram.com/static/images/ico/favicon-200.png/ab6eff595bb1.png" alt="Instagram">
-              <a href="https://instagram.com/example" target="_blank">Cool post on AI visuals</a>
-            </div>
-          </div>
+          <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram (<span id="instagramCount">0</span>)</div>
+          <div class="sub-panel-content" id="instagramPanel"></div>
         </div>
 
         <!-- Reddit -->
         <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit</div>
-          <div class="sub-panel-content" id="redditPanel">
-            <div class="result-item">
-              <img src="https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-180x180.png" alt="Reddit">
-              <a href="https://reddit.com/r/example" target="_blank">Reddit thread on AGI</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- OnlyFans -->
-        <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('onlyfansPanel')">OnlyFans</div>
-          <div class="sub-panel-content" id="onlyfansPanel">
-            <div class="result-item">
-              <img src="https://onlyfans.com/favicon.ico" alt="OnlyFans">
-              <a href="https://onlyfans.com/example" target="_blank">Exclusive behind-the-scenes</a>
-            </div>
-          </div>
+          <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit (<span id="redditCount">0</span>)</div>
+          <div class="sub-panel-content" id="redditPanel"></div>
         </div>
       </div>
     </div>
@@ -126,15 +100,49 @@
       content.classList.toggle("active");
     }
 
-    function handleSearch() {
+    async function handleSearch() {
       const query = document.getElementById("searchInput").value.toLowerCase();
       const results = {
-        social: query.includes("twitter") || query.includes("reddit") ? 3 : 0,
+        social: 0,
+        reddit: 0,
+        twitter: 0,
+        instagram: 0,
         news: query.includes("cnn") || query.includes("breaking") ? 2 : 0,
         investing: query.includes("stocks") || query.includes("market") ? 4 : 0,
         sports: query.includes("nba") || query.includes("football") ? 1 : 0,
         research: query.includes("science") || query.includes("researchers") ? 5 : 0,
       };
+
+      const redditPanel = document.getElementById("redditPanel");
+      redditPanel.innerHTML = "";
+
+      if (query.length > 0) {
+        const res = await fetch(`https://www.reddit.com/search.json?q=${query}&limit=5`);
+        const data = await res.json();
+        results.reddit = data.data.children.length;
+        results.social += results.reddit;
+
+        data.data.children.forEach(post => {
+          const link = document.createElement("a");
+          link.href = `https://reddit.com${post.data.permalink}`;
+          link.textContent = post.data.title;
+          link.target = "_blank";
+
+          const item = document.createElement("div");
+          item.className = "result-item";
+          const img = document.createElement("img");
+          img.src = "https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-180x180.png";
+          img.alt = "Reddit";
+          item.appendChild(img);
+          item.appendChild(link);
+
+          redditPanel.appendChild(item);
+        });
+      }
+
+      document.getElementById("redditCount").textContent = results.reddit;
+      document.getElementById("twitterCount").textContent = results.twitter;
+      document.getElementById("instagramCount").textContent = results.instagram;
 
       document.getElementById("socialCount").textContent = `Social Media: ${results.social}`;
       document.getElementById("newsCount").textContent = `News Media: ${results.news}`;
