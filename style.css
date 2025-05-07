@@ -3,7 +3,7 @@ body {
   font-family: "Hanalei Fill", system-ui; /* Added sans-serif fallback */
 }
 
-.mrs-sheppards-regular {
+.hanalei-fill-regular {
   font-family: "Hanalei Fill", system-ui;
   font-weight: 400; /* Ensure the correct weight is applied */
   font-style: normal; /* Ensure the font is not italicized */
@@ -20,7 +20,7 @@ h1 {
 
 p {
   color: #555;
-.hanalei-fill-regular {
+ .hanalei-fill-regular {
   font-family: "Hanalei Fill", system-ui;
   font-weight: 400;
   font-style: normal;
