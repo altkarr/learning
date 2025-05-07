@@ -1,6 +1,8 @@
 body {
   background-color: #f0f4f8;
- .mrs-sheppards-regular {
+}
+
+.mrs-sheppards-regular {
   font-family: "Mrs Sheppards", cursive;
   font-weight: 400;
   font-style: normal;
@@ -14,9 +16,6 @@ h1 {
 
 p {
   color: #555;
-.mrs-sheppards-regular {
-  font-family: "Mrs Sheppards", cursive;
-  font-weight: 400;
-  font-style: normal;
+  font-family: "Mrs Sheppards", cursive; /* Added font-family to p */
   font-size: 24px;
 }
