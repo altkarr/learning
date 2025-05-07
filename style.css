@@ -1,3 +1,4 @@
+/* Base and Layout */
 body {
   font-family: 'Hanalei Fill', cursive;
   margin: 0;
@@ -37,35 +38,39 @@ header {
   cursor: pointer;
 }
 
-.refinement-controls {
-  margin-top: 0.5rem;
-}
-
-.refinement-controls select {
-  padding: 0.4rem;
-  margin: 0 0.3rem;
-  border-radius: 4px;
-  border: 1px solid #bbb;
-}
-
 .results-summary {
-  margin-top: 1rem;
   display: flex;
-  justify-content: space-around;
-  font-weight: bold;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.results-summary div {
+  background: #003f5c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 .ticker {
-  display: flex;
-  justify-content: space-between;
+  background-color: #1c1c1c;
+  color: #00ffcc;
   padding: 0.5rem 1rem;
-  background: #333;
-  color: #fff;
-  font-size: 0.9rem;
+  font-family: monospace;
   overflow: hidden;
   white-space: nowrap;
+  animation: scrollTicker 30s linear infinite;
 }
 
+@keyframes scrollTicker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Panels */
 .panel-grid {
   display: flex;
   flex-direction: column;
@@ -84,19 +89,22 @@ header {
   font-size: 1.5rem;
   background: #003f5c;
   color: white;
+  cursor: pointer;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.panel-header .arrow {
-  font-size: 1rem;
+  justify-content: space-between;
 }
 
 .panel-content {
   padding: 1rem;
+  display: none;
 }
 
+.panel.active .panel-content {
+  display: block;
+}
+
+/* Sub-panels */
 .sub-panel {
   margin-top: 1rem;
   border-top: 1px solid #ccc;
@@ -117,14 +125,17 @@ header {
   display: none;
 }
 
-.sub-panel-content.open {
+.sub-panel-content.active {
   display: block;
 }
 
+/* Results */
 .result-item {
   display: flex;
   align-items: center;
   margin: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
 }
 
 .result-item img {
@@ -144,22 +155,37 @@ header {
   text-decoration: underline;
 }
 
+.result-meta {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: #555;
+  text-align: right;
+}
+
+/* Bias meter (for News) */
 .bias-meter {
-  height: 8px;
   width: 100px;
-  background: linear-gradient(to right, blue, white, red);
-  border-radius: 4px;
-  margin-top: 0.25rem;
+  height: 10px;
+  border-radius: 5px;
+  margin-left: 1rem;
+  background: linear-gradient(to right, #0000ff, #cccccc, #ff0000);
 }
 
-.bias-left {
-  background: linear-gradient(to right, #0033cc 40%, #ddd 60%);
+/* Research Panel */
+#researchPanel iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
 }
 
-.bias-right {
-  background: linear-gradient(to right, #ddd 40%, #cc0000 60%);
-}
+/* Media Queries */
+@media (max-width: 768px) {
+  .results-summary {
+    flex-direction: column;
+    align-items: center;
+  }
 
-.bias-center {
-  background: linear-gradient(to right, #aaa 50%, #aaa 50%);
+  .ticker {
+    font-size: 0.9rem;
+  }
 }
