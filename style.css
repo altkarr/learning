@@ -1,9 +1,6 @@
 body {
   background-color: #f0f4f8;
   font-family: "National Park", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
   text-align: center;
   padding: 50px;
 }
@@ -15,8 +12,5 @@ h1 {
 p {
   color: #555;
   font-family: "National Park", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
   font-size: 24px;
 }
