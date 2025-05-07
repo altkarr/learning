@@ -40,15 +40,31 @@
   </div>
 </div>
   <main class="panel-grid">
-    <div class="panel" onclick="togglePanel(this)">
-  <div class="panel-header">
-    <i class="fas fa-hashtag"></i> Social Media
+    <div class="panel">
+  <div class="panel-header" onclick="togglePanel('socialMediaPanel')">
+    <span>Social Media</span>
+    <span class="arrow">▼</span>
   </div>
-  <div class="panel-content">
-    <p>Real-time tweets, Reddit threads, and trends will go here.</p>
-  </div>
-</div>
+  <div class="panel-content" id="socialMediaPanel">
 
+    <!-- Subcategories: Twitter, Instagram, etc. -->
+    <div class="sub-panel">
+      <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
+      <div class="sub-panel-content" id="twitterPanel">
+        <!-- Sample content -->
+        <div class="result-item">
+          <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter Icon">
+          <a href="https://twitter.com/example" target="_blank">Post about AI breakthroughs</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-panel">
+      <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
+      <div class="sub-panel-content" id="instagramPanel">
+        <div class="result-item">
+          <img src="https://instagram.com/static/images/ico/favicon-200.png/ab6eff595bb1.png" alt="Instagram Icon">
+          <a href="
 <div class="panel" onclick="togglePanel(this)">
   <div class="panel-header">
     <i class="fas fa-newspaper"></i> News Media
