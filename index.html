@@ -19,97 +19,141 @@
   <div class="search-section">
     <input type="text" id="searchInput" placeholder="Search across all categories..." />
     <button onclick="handleSearch()">Search</button>
-    <div class="refinement-controls">
-      <select id="redditTime">
-        <option value="day">Past Day</option>
-        <option value="week" selected>Past Week</option>
-        <option value="month">Past Month</option>
-        <option value="year">Past Year</option>
-      </select>
-      <select id="redditSort">
-        <option value="top" selected>Top</option>
-        <option value="new">New</option>
-        <option value="comments">Most Commented</option>
-      </select>
-    </div>
     <div class="results-summary">
       <div id="socialCount" onclick="togglePanel('socialMediaPanel')">Social Media: 0</div>
-      <div id="newsCount">News Media: 0</div>
-      <div id="investingCount">Investing: 0</div>
-      <div id="sportsCount">Sports: 0</div>
-      <div id="researchCount">Research: 0</div>
+      <div id="newsCount" onclick="togglePanel('newsPanel')">News Media: 0</div>
+      <div id="investingCount" onclick="togglePanel('investingPanel')">Investing: 0</div>
+      <div id="sportsCount" onclick="togglePanel('sportsPanel')">Sports: 0</div>
+      <div id="researchCount" onclick="togglePanel('researchPanel')">Research: 0</div>
     </div>
   </div>
 
-  <div class="ticker">
-    <div id="sportsTicker">Live Sports Scores Ticker...</div>
-    <div id="investingTicker">Market & Finance Ticker...</div>
+  <div class="ticker-container">
+    <div class="ticker" id="sportsTicker">Loading sports scores...</div>
+    <div class="ticker" id="investingTicker">Loading financial updates...</div>
   </div>
 
   <main class="panel-grid">
     <!-- Social Media Panel -->
     <div class="panel" id="socialMediaPanel">
       <div class="panel-header" onclick="togglePanel('socialMediaPanel')">
-        <i class="fab fa-hashtag"></i> <span>Social Media</span>
-        <span class="arrow">▼</span>
+        <i class="fab fa-hashtag"></i> Social Media
       </div>
       <div class="panel-content">
-        <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('twitterPanel')">Twitter/X</div>
-          <div class="sub-panel-content" id="twitterPanel"></div>
-        </div>
-        <div class="sub-panel">
-          <div class="sub-panel-header" onclick="toggleSubPanel('instagramPanel')">Instagram</div>
-          <div class="sub-panel-content" id="instagramPanel"></div>
+        <div class="refine-options">
+          <label>Time Range:</label>
+          <select>
+            <option>Past Week</option>
+            <option>Past Month</option>
+            <option>3 Months</option>
+            <option>6 Months</option>
+            <option>Past Year</option>
+          </select>
         </div>
         <div class="sub-panel">
           <div class="sub-panel-header" onclick="toggleSubPanel('redditPanel')">Reddit</div>
-          <div class="sub-panel-content" id="redditPanel"></div>
+          <div class="sub-panel-content" id="redditPanel">
+            <!-- Reddit posts will go here -->
+            <div class="result-item">
+              <img src="https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-180x180.png" alt="Reddit">
+              <a href="#">Sample Reddit post on AI</a>
+              <span class="meta">2.1k upvotes · 320 comments · Apr 30, 2025</span>
+            </div>
+          </div>
+        </div>
+        <!-- Twitter and Instagram stubs -->
+        <div class="sub-panel">
+          <div class="sub-panel-header">Twitter/X</div>
+          <div class="sub-panel-content">Results will appear here.</div>
+        </div>
+        <div class="sub-panel">
+          <div class="sub-panel-header">Instagram</div>
+          <div class="sub-panel-content">Results will appear here.</div>
         </div>
       </div>
     </div>
 
     <!-- News Media Panel -->
-    <div class="panel">
+    <div class="panel" id="newsPanel">
       <div class="panel-header">
         <i class="fas fa-newspaper"></i> News Media
       </div>
-      <div class="panel-content" id="newsPanel">
-        <!-- News stories with bias meter and timeframe filter will go here -->
+      <div class="panel-content">
+        <div class="refine-options">
+          <label>Time Range:</label>
+          <select>
+            <option>Today</option>
+            <option>This Week</option>
+            <option>This Month</option>
+          </select>
+        </div>
+        <div class="result-item">
+          <a href="#">Example headline on economy</a>
+          <span class="meta">Source: CNN · Center-left · May 6, 2025</span>
+        </div>
       </div>
     </div>
 
     <!-- Investing Panel -->
-    <div class="panel">
+    <div class="panel" id="investingPanel">
       <div class="panel-header">
         <i class="fas fa-chart-line"></i> Investing
       </div>
-      <div class="panel-content" id="investingPanel">
-        <!-- Finance-related articles & trends -->
+      <div class="panel-content">
+        <div class="result-item">
+          <a href="#">Stock market reacts to Fed decision</a>
+          <span class="meta">Yahoo Finance · May 6, 2025</span>
+        </div>
       </div>
     </div>
 
     <!-- Sports Panel -->
-    <div class="panel">
+    <div class="panel" id="sportsPanel">
       <div class="panel-header">
         <i class="fas fa-football-ball"></i> Sports
       </div>
-      <div class="panel-content" id="sportsPanel">
-        <!-- Sports news breakdown by league -->
+      <div class="panel-content">
+        <p>Live scores from NBA, NHL, MLB, UFC, Golf, Soccer, etc. will be shown here.</p>
       </div>
     </div>
 
     <!-- Research Panel -->
-    <div class="panel">
+    <div class="panel" id="researchPanel">
       <div class="panel-header">
         <i class="fas fa-book"></i> Research
       </div>
-      <div class="panel-content" id="researchPanel">
-        <!-- Pulled Google Scholar or ResearchGate articles -->
+      <div class="panel-content">
+        <a href="#">Google Scholar result on Quantum Computing</a>
+        <span class="meta">Nature Journal · Apr 25, 2025</span>
       </div>
     </div>
   </main>
 
-  <script src="script.js"></script>
+  <script>
+    function togglePanel(id) {
+      const panel = document.getElementById(id);
+      const isOpen = panel.classList.contains("active");
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+      if (!isOpen) panel.classList.add("active");
+    }
+
+    function toggleSubPanel(id) {
+      const content = document.getElementById(id);
+      content.classList.toggle("open");
+    }
+
+    function handleSearch() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      document.getElementById("socialCount").textContent = `Social Media: ${Math.floor(Math.random() * 10)}`;
+      document.getElementById("newsCount").textContent = `News Media: ${Math.floor(Math.random() * 10)}`;
+      document.getElementById("investingCount").textContent = `Investing: ${Math.floor(Math.random() * 10)}`;
+      document.getElementById("sportsCount").textContent = `Sports: ${Math.floor(Math.random() * 10)}`;
+      document.getElementById("researchCount").textContent = `Research: ${Math.floor(Math.random() * 10)}`;
+    }
+
+    // Placeholder ticker data
+    document.getElementById("sportsTicker").textContent = "NBA: Lakers 102 - Warriors 98 | NHL: Bruins 3 - Leafs 2 | UFC: Oliveira def. Dariush (Rd 2) | Golf: Scheffler leads by 2";
+    document.getElementById("investingTicker").textContent = "DOW +150 | NASDAQ -45 | S&P 500 +22 | Bitcoin $65,000 | Ethereum $3,200";
+  </script>
 </body>
 </html>
